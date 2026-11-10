@@ -1,270 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>UrbanRedactor-GE</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>UrbanRedactor-GE</title>
     <style>
-        [data-theme="dark"] {
-            --bg-main: #1f2023;
-            --bg-header: #2d2e31;
-            --bg-sidebar: #242528;
-            --text-color: #e3e3e3;
-            --text-muted: #9aa0a6;
-            --border-line: #1a73e8;
-            --accent-blue: #1a73e8;
-            --icon-color: #9aa0a6;
-            --switch-bg: #5f6368;
-            --switch-active: #ffffff;
-            --avatar-bg: #5f6368;
-        }
-
-        [data-theme="light"] {
-            --bg-main: #f8f9fa;
-            --bg-header: #ffffff;
-            --bg-sidebar: #f1f3f4;
-            --text-color: #202124;
-            --text-muted: #70757a;
-            --border-line: #1a73e8;
-            --accent-blue: #1a73e8;
-            --icon-color: #70757a;
-            --switch-bg: #bcc1c6;
-            --switch-active: #ffffff;
-            --avatar-bg: #e8eaed;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto',Arial,sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            transition: background 0.2s,color 0.2s;
-        }
-
-        header {
-            background-color: var(--bg-header);
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            user-select: none;
-        }
-
-        .switch-container {
-            display: inline-block;
-            position: relative;
-            width: 48px;
-            height: 26px;
-        }
-
-            .switch-container input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--switch-bg);
-            transition: .2s;
-            border-radius: 30px;
-        }
-
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 20px;
-                width: 20px;
-                left: 3px;
-                bottom: 3px;
-                background-color: #2d2e31;
-                transition: .2s;
-                border-radius: 50%;
-            }
-
-        input:checked + .slider {
-            background-color: var(--switch-active);
-        }
-
-            input:checked + .slider:before {
-                transform: translateX(22px);
-                background-color: #f1f3f4;
-            }
-
-        .profile-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .profile-text-block {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-            .profile-text-block .user-name {
-                font-weight: 500;
-                color: var(--text-color);
-            }
-
-            .profile-text-block .user-mail {
-                color: var(--text-muted);
-                font-size: 0.75rem;
-            }
-
-        .login-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .avatar-circle {
-            width: 38px;
-            height: 38px;
-            background-color: var(--avatar-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-        }
-
-            .avatar-circle::before {
-                content: "👤";
-                font-size: 1.2rem;
-                filter: grayscale(1) opacity(0.5);
-            }
-
-            .avatar-circle.has-image::before {
-                display: none;
-            }
-
-        .main-container {
-            display: flex;
-            flex: 1;
-            height: calc(100vh - 64px);
-        }
-
-        aside {
-            width: 230px;
-            background-color: var(--bg-sidebar);
-            padding: 28px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border-right: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .sidebar-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-color);
-            margin-bottom: 8px;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            cursor: pointer;
-            font-weight: 400;
-        }
-
-        .content-wrapper {
-            flex: 1;
-            padding: 24px 40px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blue-divider {
-            height: 2px;
-            background-color: var(--border-line);
-            width: 100%;
-            margin-bottom: 28px;
-            border-radius: 2px;
-        }
-
-        .btn-new-project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-color);
-            font-size: 1.05rem;
-            font-weight: 500;
-            text-decoration: none;
-            margin-bottom: 36px;
-            align-self: flex-start;
-            cursor: pointer;
-        }
-
-            .btn-new-project-link .plus-icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 30px;
-                height: 30px;
-                background-color: var(--accent-blue);
-                color: white;
-                border-radius: 50%;
-                font-weight: bold;
-                font-size: 1.3rem;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-            }
-
-            .btn-new-project-link:hover .plus-icon {
-                filter: brightness(0.8);
-            }
-
-        .empty-projects-state {
-            flex: 0.6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-            user-select: none;
-        }
+        [data-theme="dark"]{--bg-main:#1f2023;--bg-header:#2d2e31;--bg-sidebar:#242528;--text-color:#e3e3e3;--text-muted:#9aa0a6;--border-line:#1a73e8;--accent-blue:#1a73e8;--icon-color:#9aa0a6;--switch-bg:#5f6368;--switch-active:#ffffff;--avatar-bg:#5f6368;}
+        [data-theme="light"]{--bg-main:#f8f9fa;--bg-header:#ffffff;--bg-sidebar:#f1f3f4;--text-color:#202124;--text-muted:#70757a;--border-line:#1a73e8;--accent-blue:#1a73e8;--icon-color:#70757a;--switch-bg:#bcc1c6;--switch-active:#ffffff;--avatar-bg:#e8eaed;}
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Roboto',Arial,sans-serif;}
+        body{background-color:var(--bg-main);color:var(--text-color);display:flex;flex-direction:column;height:100vh;overflow:hidden;transition:background 0.2s,color 0.2s;}
+        header{background-color:var(--bg-header);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid rgba(0,0,0,0.08);box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+        .header-left{display:flex;align-items:center;gap:12px;user-select:none;}
+        .switch-container{display:inline-block;position:relative;width:48px;height:26px;} .switch-container input{opacity:0;width:0;height:0;}
+        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:var(--switch-bg);transition:.2s;border-radius:30px;}
+        .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background-color:#2d2e31;transition:.2s;border-radius:50%;}
+        input:checked+.slider{background-color:var(--switch-active);} input:checked+.slider:before{transform:translateX(22px);background-color:#f1f3f4;}
+        .profile-area{display:flex;align-items:center;gap:14px;}
+        .profile-text-block { display:flex; flex-direction:column; text-align:right; font-size:0.85rem; line-height:1.4; }
+        .profile-text-block .user-name { font-weight:500; color:var(--text-color); } .profile-text-block .user-mail { color:var(--text-muted); font-size:0.75rem; }
+        .login-link{color:var(--accent-blue);text-decoration:none;font-size:0.95rem;font-weight:500;cursor:pointer;}
+        .avatar-circle{width:38px;height:38px;background-color:var(--avatar-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;}
+        .avatar-circle::before{content:"👤";font-size:1.2rem;filter:grayscale(1) opacity(0.5);} .avatar-circle.has-image::before{display:none;}
+        .main-container{display:flex;flex:1;height:calc(100vh - 64px);}
+        aside{width:230px;background-color:var(--bg-sidebar);padding:28px 20px;display:flex;flex-direction:column;gap:18px;border-right:1px solid rgba(0,0,0,0.05);}
+        .sidebar-title{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-color);margin-bottom:8px;font-weight:700;opacity:0.9;}
+        .nav-link{color:var(--text-muted);text-decoration:none;font-size:0.95rem;cursor:pointer;font-weight:400;}
+        .content-wrapper{flex:1;padding:24px 40px;display:flex;flex-direction:column;}
+        .blue-divider{height:2px;background-color:var(--border-line);width:100%;margin-bottom:28px;border-radius:2px;}
+        .btn-new-project-link{display:inline-flex;align-items:center;gap:12px;color:var(--text-color);font-size:1.05rem;font-weight:500;text-decoration:none;margin-bottom:36px;align-self:flex-start;cursor:pointer;}
+        .btn-new-project-link .plus-icon{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background-color:var(--accent-blue);color:white;border-radius:50%;font-weight:bold;font-size:1.3rem;box-shadow:0 1px 3px rgba(0,0,0,0.15);}
+        .btn-new-project-link:hover .plus-icon{filter:brightness(0.8);}
+        .empty-projects-state{flex:0.6;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:1.1rem;letter-spacing:0.5px;user-select:none;}
     </style>
 </head>
 <body>
     <header>
-        <div class="header-left"><span>☼</span><label class="switch-container"><input type="checkbox" id="theme-checkbox"><span class="slider"></span></label><span>☾</span></div>
+        <div class="header-left"><span>☼</span><label class="sc"><input type="checkbox" id="theme-checkbox"><span class="sl"></span></label><span>☾</span></div>
         <div style="font-size:1.4rem;font-weight:500;">UrbanRedactor-GE</div>
-        <div class="profile-area" id="profileContainer"><a href="HTMLPage3/HTMLPage3.html" class="login-link" id="loginLink">Войти</a><div class="avatar-circle" id="userAvatar"></div></div>
+        <div class="profile-area" id="profileContainer"><a href="HTMLPage3.html" class="login-link" id="loginLink">Войти</a><div class="avatar-circle" id="userAvatar"></div></div>
     </header>
     <div class="main-container">
         <aside>
@@ -278,7 +49,7 @@
         </main>
     </div>
     <script>
-                (function(){window.addEventListener('DOMContentLoaded',function(){var sn=localStorage.getItem('urban_username'),sm=localStorage.getItem('urban_email'),si=localStorage.getItem('urban_avatar'),c=document.getElementById('profileContainer'),a=document.getElementById('userAvatar'),l=document.getElementById('loginLink'),t=document.getElementById('theme-checkbox'),b=document.getElementById('btnNewProject');if(sn&&c&&a){if(l)l.style.display='none';let m='Почта:***@gmail.com';if(sm&&sm.includes('@')){m='Почта:***@'+sm.split('@')[1];}var tb=document.createElement('div');tb.className='profile-text-block';tb.innerHTML='<span class="user-name">'+sn+'</span><span class="user-mail">'+m+'</span>';c.insertBefore(tb,a);if(si){a.style.backgroundImage="url('"+si+"')";a.classList.add('has-image');}}if(t){t.addEventListener('change',function(){var h=document.documentElement;if(t instanceof HTMLInputElement){h.setAttribute('data-theme',t.checked?'light':'dark');}});}if(b){b.addEventListener('click',function(){if(localStorage.getItem('urban_username')){window.location.href='HTMLPage5/HTMLPage5.html';}else{window.location.href='HTMLPage3/HTMLPage3.html';}});}});})();
+        (function(){window.addEventListener('DOMContentLoaded',function(){var sn=localStorage.getItem('urban_username'),sm=localStorage.getItem('urban_email'),si=localStorage.getItem('urban_avatar'),c=document.getElementById('profileContainer'),a=document.getElementById('userAvatar'),l=document.getElementById('loginLink'),t=document.getElementById('theme-checkbox'),b=document.getElementById('btnNewProject');if(sn&&c&&a){if(l)l.style.display='none';let m='Почта:***@gmail.com';if(sm&&sm.includes('@')){m='Почта:***@'+sm.split('@');}var tb=document.createElement('div');tb.className='profile-text-block';tb.innerHTML='<span class="user-name">'+sn+'</span><span class="user-mail">'+m+'</span>';c.insertBefore(tb,a);if(si){a.style.backgroundImage="url('"+si+"')";a.classList.add('has-image');}}if(t){t.addEventListener('change',function(){var h=document.documentElement;if(t instanceof HTMLInputElement){h.setAttribute('data-theme',t.checked?'light':'dark');}});}if(b){b.addEventListener('click',function(){if(localStorage.getItem('urban_username')){window.location.href='HTMLPage5.html';}else{window.location.href='HTMLPage3.html';}});}});})();
     </script>
 </body>
 </html>
