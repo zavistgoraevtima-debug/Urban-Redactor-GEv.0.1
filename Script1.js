@@ -49,8 +49,8 @@
                 if (avatarDataUrl) {
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
-                // Исправленный относительный путь для обхода ошибки 404 на GitHub Pages
-                window.location.href = 'index.html';
+                // Универсальный относительный переход в корень сайта для гарантированного обхода 404
+                window.location.href = './';
             });
         }
     });
