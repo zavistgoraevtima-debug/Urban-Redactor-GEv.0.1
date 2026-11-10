@@ -116,8 +116,12 @@
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
                 
-                // Самая безопасная команда перехода для серверов Linux
-                window.location.href = 'index.html';
+                // УНИКАЛЬНЫЙ ОБХОД БЛОКИРОВОК:
+                // Браузер жестко отрезает название текущего файла/папки из адресной строки
+                // и принудительно загружает чистый корень домена вашего репозитория!
+                var currentOrigin = window.location.origin + window.location.pathname;
+                var cleanPath = currentOrigin.substring(0, currentOrigin.lastIndexOf('/'));
+                window.location.href = cleanPath + '/index.html';
             });
         }
     });
@@ -154,4 +158,3 @@
         } catch (e) { t.innerHTML += '<div class="le">&gt; Порт: [ОШИБКА] Шлюз заблокирован.</div>'; }
     }
 })();
-
