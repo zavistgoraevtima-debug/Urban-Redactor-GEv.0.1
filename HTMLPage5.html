@@ -14,7 +14,9 @@
         .cgrp{display:flex;gap:24px;} .cbox{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
         .fbtn{background-color:#ea4335;color:#ffffff;border:none;font-size:1.1rem;font-weight:bold;padding:14px;width:100%;border-radius:8px;cursor:pointer;text-transform:uppercase;box-shadow:0 4px 12px rgba(234,67,53,0.25);}
     </style>
-    <script src="https://yandex.ru" type="text/javascript"></script>
+    <!-- Подключаем стабильную библиотеку Leaflet вместо Яндекса -->
+    <link rel="stylesheet" href="https://unpkg.com" />
+    <script src="https://unpkg.com"></script>
 </head>
 <body>
     <h1 style="font-size:1.4rem;color:#1a73e8;margin-bottom:24px;text-transform:uppercase;letter-spacing:1px;">Создать новый проект</h1>
@@ -30,24 +32,43 @@
     </div>
     <script>
         (function(){
-            var yandexMap = null;
-            window.addEventListener('DOMContentLoaded',function(){
-                if(typeof ymaps!=='undefined'){ymaps.ready(function(){
-                    yandexMap=new ymaps.Map('map',{center:[55.75,37.62],zoom:2,type:'yandex#satellite',controls:['zoomControl']});
-                    yandexMap.events.add('boundschange',function(){
-                        var s=document.getElementById('projScale');
-                        if(yandexMap&&s){s.value=Math.round(156543/Math.pow(2,yandexMap.getZoom()))+" px/px";}
+            var leafletMap = null;
+            window.addEventListener('DOMContentLoaded', function(){
+                var mapEl = document.getElementById('map');
+                if(mapEl && typeof L !== 'undefined'){
+                    // Создаем карту с центром на пустой местности
+                    leafletMap = L.map('map', {
+                        center: [20.0, 0.0],
+                        zoom: 2,
+                        zoomControl: true,
+                        attributionControl: false
                     });
-                });}
-                var nb=document.getElementById('timeNight'),db=document.getElementById('timeDay'),mf=document.getElementById('mapFrame'),sb=document.getElementById('startProjectBtn');
-                if(nb&&db){
-                    nb.addEventListener('change',function(){db.checked=!nb.checked;if(mf){if(nb.checked)mf.classList.add('night-mode');else mf.classList.remove('night-mode');}});
-                    db.addEventListener('change',function(){nb.checked=!db.checked;if(mf){if(db.checked)mf.classList.remove('night-mode');else mf.classList.add('night-mode');}});
+                    
+                    // Загружаем чистый мировой спутниковый слой без городов и дорог
+                    L.tileLayer('https://arcgisonline.com{z}/{y}/{x}', {
+                        maxZoom: 18
+                    }).addTo(leafletMap);
+
+                    leafletMap.on('zoomend', function() {
+                        var scaleInput = document.getElementById('projScale');
+                        if (leafletMap && scaleInput) {
+                            var res = Math.round(156543 / Math.pow(2, leafletMap.getZoom()));
+                            scaleInput.value = res + " px/px";
+                        }
+                    });
                 }
-                if(sb){sb.addEventListener('click',function(){
-                    var i=document.getElementById('projName');if(i&&i instanceof HTMLInputElement)localStorage.setItem('urban_current_project_name',i.value||'Без названия');
+
+                var nb = document.getElementById('timeNight'), db = document.getElementById('timeDay'), mf = document.getElementById('mapFrame');
+                if(nb && db){
+                    nb.addEventListener('change', function(){db.checked = !nb.checked; if(mf){if(nb.checked)mf.classList.add('night-mode'); else mf.classList.remove('night-mode');}});
+                    db.addEventListener('change', function(){nb.checked = !db.checked; if(mf){if(db.checked)mf.classList.remove('night-mode'); else mf.classList.add('night-mode');}});
+                }
+
+                var sb = document.getElementById('startProjectBtn');
+                if(sb){sb.addEventListener('click', function(){
+                    var i = document.getElementById('projName'); if(i && i instanceof HTMLInputElement) localStorage.setItem('urban_current_project_name', i.value || 'Без названия');
                     alert("Проект успешно настроен! Переход в симулятор.");
-                    window.location.href='index.html'; // Прямой чистый возврат к куче файлов
+                    window.location.href = 'index.html';
                 });}
             });
         })();
