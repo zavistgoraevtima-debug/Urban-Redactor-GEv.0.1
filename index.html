@@ -2,249 +2,332 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UrbanRedactor-GE</title>
     <style>
-        [data-theme="dark"]{--b:#1f2023;--h:#2d2e31;--s:#242528;--t:#e3e3e3;--m:#9aa0a6;--l:#1a73e8;}
-        [data-theme="light"]{--b:#f8f9fa;--h:#ffffff;--s:#f1f3f4;--t:#202124;--m:#70757a;--l:#1a73e8;}
-        *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
-        body{background:var(--b);color:var(--t);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
-        header{background:var(--h);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid rgba(0,0,0,0.08);}
-        .hl,.pa{display:flex;align-items:center;gap:12px;user-select:none;}
-        .sc{display:inline-block;position:relative;width:48px;height:26px;} .sc input{opacity:0;width:0;height:0;}
-        .sl{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#5f6368;transition:.2s;border-radius:30px;}
-        .sl:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#2d2e31;transition:.2s;border-radius:50%;}
-        input:checked+.sl{background:#fff;} input:checked+.sl:before{transform:translateX(22px);background:#f1f3f4;}
-        .pt{display:flex;flex-direction:column;text-align:right;font-size:0.85rem;}
-        .ll{color:var(--l);text-decoration:none;font-size:0.95rem;font-weight:500;cursor:pointer;}
-        .ac{width:38px;height:38px;background:#5f6368;border-radius:50%;display:flex;align-items:center;justify-content:center;background-size:cover;}
-        .ac::before{content:"👤";font-size:1.2rem;filter:grayscale(1) opacity(0.5);} .ac.hi::before{display:none;}
-        .mc{display:flex;flex:1;height:calc(100vh - 64px);}
-        aside{width:230px;background:var(--s);padding:28px 20px;display:flex;flex-direction:column;gap:18px;border-right:1px solid rgba(0,0,0,0.05);}
-        .st{font-size:0.85rem;text-transform:uppercase;font-weight:700;}
-        .nl{color:var(--m);text-decoration:none;font-size:0.95rem;cursor:pointer;} .nl:hover{color:var(--t);}
-        .cw{flex:1;padding:24px 40px;display:flex;flex-direction:column;}
-        .bd{height:2px;background:var(--l);width:100%;margin-bottom:28px;}
-        .btn{display:inline-flex;align-items:center;gap:12px;color:var(--t);text-decoration:none;margin-bottom:36px;cursor:pointer;}
-        .btn .pi{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--l);color:#fff;border-radius:50%;font-weight:bold;}
-        .empty{flex:0.6;display:flex;align-items:center;justify-content:center;color:var(--m);font-size:1.1rem;}
+        [data-theme="dark"] {
+            --bg-main: #1f2023;
+            --bg-header: #2d2e31;
+            --bg-sidebar: #242528;
+            --text-color: #e3e3e3;
+            --text-muted: #9aa0a6;
+            --border-line: #1a73e8;
+            --accent-blue: #1a73e8;
+            --icon-color: #9aa0a6;
+            --switch-bg: #5f6368;
+            --switch-active: #ffffff;
+            --avatar-bg: #5f6368;
+        }
 
-        /* СТИЛИ ЭКРАНОВ И ОКОН ОФОРМЛЕНИЯ */
-        .screen-view { display: none; width: 100%; height: 100%; }
-        .screen-view.active-screen { display: flex; }
-        
-        /* Экран Регистрации */
-        #screenRegister { background-image: linear-gradient(to right, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.2) 100%), url('image_VtLq8s.png'); background-size: cover; background-position: center; position: fixed; top: 0; left: 0; z-index: 999; }
-        .as{width:420px;background:#2d2e31;padding:40px 32px;display:flex;flex-direction:column;height:100vh;}
-        .fg{margin-bottom:20px;display:flex;flex-direction:column;gap:6px;}
-        .fg input{width:100%;padding:12px;background:#1f2023;border:1px solid #3c4043;color:#fff;border-radius:8px;outline:none;}
-        .ab{width:80px;height:80px;background:#5f6368;border-radius:50%;cursor:pointer;border:none;background-size:cover;background-position:center;align-self:center;margin:20px 0;display:flex;align-items:center;justify-content:center;}
-        .ab::before{content:"👤";font-size:2.2rem;opacity:0.4;} .ab.hi::before{display:none;}
-        .sbtn{width:100%;padding:14px;background:#500000;color:#fff;border:none;font-weight:bold;border-radius:8px;cursor:pointer;text-transform:uppercase;}
-        .pc{flex:1;padding:60px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;}
-        
-        /* Экран Создания Проекта */
-        #screenNewProject { position: fixed; top:0; left:0; background:#1f2023; z-index: 998; padding: 40px; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .mcard { background:#242528; border:1px solid #3c4043; border-radius:16px; width:100%; max-width:500px; padding:28px; display:flex; flex-direction:column; gap:24px; }
-        .mwrap { width:100%; height:320px; background:#121314; border:1px solid #3c4043; border-radius:10px; overflow:hidden; position:relative; }
-        #map { width:100%; height:100%; }
-        .mwrap.night-mode { filter: invert(1) hue-rotate(180deg) brightness(0.6); }
-        .cgrp { display:flex; gap:24px; } .cbox { display:flex; align-items:center; gap:10px; cursor:pointer; }
-        .fbtn { background:#ea4335; color:#fff; border:none; font-size:1.1rem; font-weight:bold; padding:14px; width:100%; border-radius:8px; cursor:pointer; text-transform:uppercase; }
+        [data-theme="light"] {
+            --bg-main: #f8f9fa;
+            --bg-header: #ffffff;
+            --bg-sidebar: #f1f3f4;
+            --text-color: #202124;
+            --text-muted: #70757a;
+            --border-line: #1a73e8;
+            --accent-blue: #1a73e8;
+            --icon-color: #70757a;
+            --switch-bg: #bcc1c6;
+            --switch-active: #ffffff;
+            --avatar-bg: #e8eaed;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        header {
+            background-color: var(--bg-header);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+
+        .theme-symbol {
+            font-size: 1.3rem;
+            color: var(--icon-color);
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        .switch-container {
+            display: inline-block;
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .switch-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--switch-bg);
+            transition: .2s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #2d2e31;
+            transition: .2s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--switch-active);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+            background-color: #f1f3f4;
+        }
+
+        .site-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .profile-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .profile-text-block {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .profile-text-block .user-name {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .profile-text-block .user-mail {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .login-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: filter 0.2s;
+            cursor: pointer;
+        }
+
+        .avatar-circle {
+            width: 38px;
+            height: 38px;
+            background-color: var(--avatar-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar-circle::before {
+            content: "👤";
+            font-size: 1.2rem;
+            filter: grayscale(1) opacity(0.5);
+        }
+
+        .avatar-circle.has-image::before {
+            display: none;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 64px);
+        }
+
+        aside {
+            width: 230px;
+            background-color: var(--bg-sidebar);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color 0.2s, filter 0.2s;
+            font-weight: 400;
+        }
+
+        .nav-link:hover {
+            color: var(--text-color);
+        }
+
+        .content-wrapper {
+            flex: 1;
+            padding: 24px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .version-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .blue-divider {
+            height: 2px;
+            background-color: var(--border-line);
+            width: 100%;
+            margin-bottom: 28px;
+            border-radius: 2px;
+        }
+
+        .btn-new-project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-color);
+            font-size: 1.05rem;
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 36px;
+            align-self: flex-start;
+            cursor: pointer;
+        }
+
+        .btn-new-project-link .plus-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.3rem;
+            transition: filter 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .btn-new-project-link:hover .plus-icon {
+            filter: brightness(0.8);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .empty-projects-state {
+            flex: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            user-select: none;
+        }
     </style>
-    <script src="https://yandex.ru" type="text/javascript"></script>
 </head>
 <body>
-
-    <!-- ЭКРАН 1: ГЛАВНОЕ МЕНЮ (ПО УМОЛЧАНИЮ АКТИВЕН) -->
-    <div class="screen-view active-screen" id="screenMenu" style="flex-direction: column;">
-        <header>
-            <div class="hl">
-                <span>☼</span>
-                <label class="sc"><input type="checkbox" id="theme-checkbox"><span class="sl"></span></label>
-                <span>☾</span>
-            </div>
-            <div style="font-size:1.4rem;font-weight:500;">UrbanRedactor-GE</div>
-            <div class="pa" id="pC">
-                <a class="ll" id="lL">Войти</a>
-                <div class="ac" id="uA"></div>
-            </div>
-        </header>
-        <div class="mc">
-            <aside>
-                <div class="st">Другие настройки</div>
-                <span class="nl">Поддержка</span>
-                <a href="https://donationalerts.com" target="_blank" class="nl">Донат *ссылка*</a>
-                <span class="nl">Поделиться проектом</span>
-            </aside>
-            <main class="cw">
-                <div style="font-size:0.8rem;color:var(--m);margin-bottom:8px;">v:0.01(Release)</div>
-                <div class="bd"></div>
-                <a class="btn" id="btnMainNewProject"><span class="pi">+</span> Новый проект</a>
-                <div style="font-size:1.3rem;margin-bottom:24px;">Мои Проекты:</div>
-                <div class="empty">Здесь ничего нет :(</div>
-            </main>
+    <header>
+        <div class="header-left">
+            <span>☼</span>
+            <label class="switch-container">
+                <input type="checkbox" id="theme-checkbox">
+                <span class="slider"></span>
+            </label>
+            <span>☾</span>
         </div>
-    </div>
+        <div class="site-title">UrbanRedactor-GE</div>
+        <div class="profile-area" id="profileContainer">
+            <!-- Учли правильный регистр папки HTMLPage3 -->
+            <a href="HTMLPage3/HTMLPage3.html" class="login-link" id="loginLink">Войти</a>
+            <div class="avatar-circle" id="userAvatar"></div>
+        </div>
+    </header>
 
-    <!-- ЭКРАН 2: ОКНО РЕГИСТРАЦИИ (ВСплывает поверх без перезагрузок) -->
-    <div class="screen-view" id="screenRegister">
-        <aside class="as">
-            <div>
-                <h1 style="font-size:1.4rem;color:#fff;">UrbanRedactor-GE</h1>
-                <div style="font-size:0.95rem;color:#1a73e8;margin-bottom:35px;">Страничка Регистрации</div>
-            </div>
-            <div>
-                <div class="fg"><label>Ваш Никнейм</label><input type="text" id="nickname" placeholder="Vanya22"></div>
-                <div class="fg"><label>Ваш Логин</label><input type="text" placeholder="@vanya22"></div>
-                <div class="fg"><label>Ваша Почта</label><input type="email" id="userEmail" placeholder="vanya22@gmail.com"></div>
-                <div class="avatar-container fg">
-                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
-                    <button type="button" id="avatarBtn" class="ab"></button>
-                    <div style="font-size:0.85rem;color:#9aa0a6;text-align:center;">Сменить аватар</div>
-                </div>
-            </div>
-            <button class="sbtn" id="submitActionBtn" type="button">Зарегистрироваться</button>
+    <div class="main-container">
+        <aside>
+            <div class="sidebar-title">Другие настройки</div>
+            <span class="nav-link">Поддержка</span>
+            <a href="https://donationalerts.com" target="_blank" class="nav-link">Донат *ссылка*</a>
+            <span class="nav-link">Поделиться своим проектом</span>
         </aside>
-        <main class="pc">
-            <div><h2 style="font-size:3.5rem;">UrbanRedactor-GE.</h2><p style="font-size:1.5rem;">Воплотите город своей мечты</p></div>
-            <div style="align-self:flex-end;font-size:1.1rem;color:#9aa0a6;">Автор: Krossovok12</div>
+        <main class="content-wrapper">
+            <div class="version-tag">v:0.01(Release)</div>
+            <div class="blue-divider"></div>
+            <a id="btnNewProject" class="btn-new-project-link">
+                <span class="plus-icon">+</span> Новый проект
+            </a>
+            <div class="section-title">Мои Проекты:</div>
+            <div class="empty-projects-state">
+                Здесь ничего нет :(
+            </div>
         </main>
     </div>
 
-    <!-- ЭКРАН 3: НАСТРОЙКА КАРТЫ ПРОЕКТА -->
-    <div class="screen-view" id="screenNewProject">
-        <h1 style="font-size:1.4rem;color:#1a73e8;margin-bottom:24px;text-transform:uppercase;">Создать новый проект</h1>
-        <div class="mcard">
-            <div class="fg"><label>Название проекта:</label><input type="text" id="projName" value="Новый проект-1"></div>
-            <div class="mwrap" id="mapFrame"><div id="map"></div></div>
-            <div class="fg"><label>Масштаб:</label><input type="text" id="projScale" readonly value="39136 px/px"></div>
-            <div class="cgrp">
-                <label class="cbox"><input type="checkbox" id="timeNight"><span>Ночь</span></label>
-                <label class="cbox"><input type="checkbox" id="timeDay" checked><span>День</span></label>
-            </div>
-            <button type="button" class="fbtn" id="startProjectBtn">Вперёд!</button>
-        </div>
-    </div>
-
-    <script>
-        (function () {
-            var avatarDataUrl = '';
-            var yandexMap = null;
-
-            window.addEventListener('DOMContentLoaded', function () {
-                // Переключатели экранов без перезагрузок страниц
-                var scrMenu = document.getElementById('screenMenu');
-                var scrRegister = document.getElementById('screenRegister');
-                var scrNewProject = document.getElementById('screenNewProject');
-
-                var btnLogin = document.getElementById('lL');
-                var btnMainNewProject = document.getElementById('btnMainNewProject');
-                var submitBtn = document.getElementById('submitActionBtn');
-                var startBtn = document.getElementById('startProjectBtn');
-                
-                var avatarBtn = document.getElementById('avatarBtn');
-                var fileInput = document.getElementById('fileInput');
-var nightBox = document.getElementById('timeNight');
-var dayBox = document.getElementById('timeDay');
-var mapFrame = document.getElementById('mapFrame');
-// Проверка сессии при запуске сайта
-updateProfileUI();
-if (btnLogin) {
-btnLogin.addEventListener('click', function() {
-scrRegister.classList.add('active-screen');
-});
-}
-if (btnMainNewProject) {
-btnMainNewProject.addEventListener('click', function() {
-if (localStorage.getItem('urban_username')) {
-scrNewProject.classList.add('active-screen');
-initYandexMap();
-} else {
-scrRegister.classList.add('active-screen');
-}
-});
-}
-if (avatarBtn && fileInput) {
-avatarBtn.addEventListener('click', function () { fileInput.click(); });
-}
-if (fileInput) {
-fileInput.addEventListener('change', function (event) {
-var input = event.target;
-if (input && input instanceof HTMLInputElement && input.files && input.files[0]) {
-var reader = new FileReader();
-reader.onload = function (e) {
-if (avatarBtn && e.target && e.target.result && typeof e.target.result === 'string') {
-avatarDataUrl = e.target.result;
-avatarBtn.style.backgroundImage = "url('" + avatarDataUrl + "')";
-avatarBtn.classList.add('hi');
-}
-};
-reader.readAsDataURL(input.files[0]);
-}
-});
-}
-if (submitBtn) {
-submitBtn.addEventListener('click', function () {
-var nameField = document.getElementById('nickname');
-var mailField = document.getElementById('userEmail');
-if (nameField && nameField instanceof HTMLInputElement) localStorage.setItem('urban_username', nameField.value || 'Пользователь');
-if (mailField && mailField instanceof HTMLInputElement) localStorage.setItem('urban_email', mailField.value || 'example@gmail.com');
-if (avatarDataUrl) localStorage.setItem('urban_avatar', avatarDataUrl);
-scrRegister.classList.remove('active-screen');
-updateProfileUI();
-});
-}
-if (nightBox && dayBox && nightBox instanceof HTMLInputElement && dayBox instanceof HTMLInputElement) {
-nightBox.addEventListener('change', function () {
-dayBox.checked = !nightBox.checked;
-if (mapFrame) { if (nightBox.checked) mapFrame.classList.add('night-mode'); else mapFrame.classList.remove('night-mode'); }
-});
-dayBox.addEventListener('change', function () {
-nightBox.checked = !dayBox.checked;
-if (mapFrame) { if (dayBox.checked) mapFrame.classList.remove('night-mode'); else mapFrame.classList.add('night-mode'); }
-});
-}
-if (startBtn) {
-startBtn.addEventListener('click', function () {
-var nameInput = document.getElementById('projName');
-if (nameInput && nameInput instanceof HTMLInputElement) localStorage.setItem('urban_current_project_name', nameInput.value || 'Без названия');
-alert("Проект успешно настроен! Переход в симулятор.");
-scrNewProject.classList.remove('active-screen');
-});
-}
-function updateProfileUI() {
-var sn = localStorage.getItem('urban_username');
-var sm = localStorage.getItem('urban_email');
-var si = localStorage.getItem('urban_avatar');
-var container = document.getElementById('pC');
-var avatar = document.getElementById('uA');
-var link = document.getElementById('lL');
-if (sn && container && avatar) {
-if (link) link.style.display = 'none';
-var existingText = container.querySelector('.pt');
-if (existingText) existingText.remove();
-var mm = 'Почта:@gmail.com';
-if (sm && sm.includes('@')) mm = 'Почта:@' + sm.split('@')[1];
-var tb = document.createElement('div'); tb.className = 'pt';
-tb.innerHTML = '' + sn + '' + mm + '';
-container.insertBefore(tb, avatar);
-if (si) { avatar.style.backgroundImage = "url('" + si + "')"; avatar.classList.add('hi'); }
-}
-}
-function initYandexMap() {
-if (yandexMap) return;
-if (typeof ymaps !== 'undefined') {
-ymaps.ready(function () {
-yandexMap = new ymaps.Map('map', { center: [55.75, 37.62], zoom: 2, type: 'yandex#satellite', controls: ['zoomControl'] });
-yandexMap.events.add('boundschange', function () {
-var scaleInput = document.getElementById('projScale');
-if (yandexMap && scaleInput) {
-var res = Math.round(156543 / Math.pow(2, yandexMap.getZoom()));
-scaleInput.value = res + " px/px";
-}
-});
-});
-}
-}
-});
-})();
+    <!-- Подключаем чистый внешний JS-файл -->
+    <script src="ScriptIndex.js"></script>
+</body>
+</html>
