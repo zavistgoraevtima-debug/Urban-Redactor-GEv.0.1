@@ -13,7 +13,7 @@
             if (sn) {
                 if (l) l.style.display = 'none';
                 var mm = 'Почта:***@gmail.com';
-                if (sm && sm.includes('@')) mm = 'Почта:***@' + sm.split('@');
+                if (sm && sm.includes('@')) mm = 'Почта:***@' + sm.split('@')[1];
                 var tb = document.createElement('div');
                 tb.className = 'pt';
                 tb.innerHTML = '<span class="un">' + sn + '</span><span class="um">' + mm + '</span>';
@@ -32,23 +32,24 @@
         var btnRetryModal = document.getElementById('btnRetryModal');
         var themeCheckbox = document.getElementById('theme-checkbox');
 
+        // ИСПРАВЛЕНО: Кнопки теперь гарантированно перенаправляют на реальные страницы проекта
         if (btnNewProject) {
             btnNewProject.addEventListener('click', function () {
                 if (localStorage.getItem('urban_username')) {
-                    window.location.href = 'HtmlPage5.html';
+                    window.location.href = './HtmlPage5.html';
                 } else {
-                    triggerLinkCheck('HtmlPage3.html');
+                    window.location.href = './HtmlPage3.html';
                 }
             });
         }
         if (btnSupport) {
             btnSupport.addEventListener('click', function () {
-                triggerLinkCheck('https://discord.gg');
+                window.open('https://discord.gg', '_blank');
             });
         }
         if (btnShare) {
             btnShare.addEventListener('click', function () {
-                triggerLinkCheck('HtmlPageShare.html');
+                window.location.href = './HtmlPageShare.html';
             });
         }
         if (btnExitModal) {
@@ -99,7 +100,7 @@
         }
         if (toLoginBtn) {
             toLoginBtn.addEventListener('click', function () {
-                window.location.href = 'HtmlPage4.html';
+                window.location.href = './HtmlPage4.html';
             });
         }
         if (submitBtn) {
@@ -116,9 +117,6 @@
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
                 
-                // УНИКАЛЬНЫЙ ОБХОД БЛОКИРОВОК:
-                // Браузер жестко отрезает название текущего файла/папки из адресной строки
-                // и принудительно загружает чистый корень домена вашего репозитория!
                 var currentOrigin = window.location.origin + window.location.pathname;
                 var cleanPath = currentOrigin.substring(0, currentOrigin.lastIndexOf('/'));
                 window.location.href = cleanPath + '/index.html';
