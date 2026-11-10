@@ -116,10 +116,8 @@
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
 
-                // ЖЕЛЕЗОБЕТОННЫЙ ВАРИАНТ ПЕРЕХОДА:
-                // Скрипт просто берет текущий адрес страницы в браузере (HtmlPage3.html) 
-                // и заменяет его имя на index.html, сохраняя правильный путь к твоему репозиторию гитхаба!
-                window.location.href = window.location.href.replace('HtmlPage3.html', 'index.html');
+                // Переход строго на index.html относительно текущей папки репозитория
+                window.location.href = './index.html';
             });
         }
     });
