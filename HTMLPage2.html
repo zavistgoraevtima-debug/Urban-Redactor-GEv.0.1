@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanRedactor-GE — Оповещение</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121314;
+            background-image: radial-gradient(circle, #1f2023 0%, #121314 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .error-card {
+            background-color: #2d2e31;
+            width: 540px;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e3e3e3;
+        }
+
+        .modal-top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+        }
+
+        .btn-exit {
+            color: #9aa0a6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            user-select: none;
+        }
+
+            .btn-exit:hover {
+                color: #ffffff;
+            }
+
+        .error-header {
+            margin-bottom: 20px;
+            border-left: 3px solid #ea4335;
+            padding-left: 12px;
+        }
+
+        .error-title {
+            color: #ea4335;
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .error-subtitle {
+            color: #ea4335;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .main-message {
+            font-size: 1.3rem;
+            color: #1a73e8;
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .terminal-box {
+            background-color: #121314;
+            border: 1px solid #3c4043;
+            border-radius: 6px;
+            padding: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #00ff66;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            min-height: 110px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+        }
+
+            .terminal-box .cmd-input {
+                color: #ffffff;
+                margin-bottom: 6px;
+            }
+
+            .terminal-box .log-err {
+                color: #ea4335;
+            }
+
+            .terminal-box .log-ok {
+                color: #34a853;
+            }
+
+        .apology {
+            color: #9aa0a6;
+            font-size: 0.9rem;
+            opacity: 0.75;
+            margin-bottom: 10px;
+        }
+
+        .card-plus {
+            position: absolute;
+            right: 24px;
+            bottom: 60px;
+            font-size: 2rem;
+            color: #202124;
+            user-select: none;
+            font-weight: 300;
+            pointer-events: none;
+        }
+
+        .modal-bottom-bar {
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-retry {
+            background: none;
+            border: none;
+            color: #9aa0a6;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            user-select: none;
+        }
+
+            .btn-retry:hover {
+                color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="card-plus">+</div>
+        <div class="modal-top-bar"><a href="HtmlPage1.html" class="btn-exit">Выйти</a></div>
+        <div class="error-header">
+            <div class="error-title">Ой-ой, Что-то пошло не так...</div>
+            <div class="error-subtitle">Ошибка 001, не найден доступ к сайту или к ссылке.</div>
+        </div>
+        <div class="main-message">Пожалуйста повторите попытку входа</div>
+        <div class="terminal-box" id="terminalLog">
+            <div class="cmd-input">C:\UrbanRedactor\System> run diagnostics.exe</div>
+            <div>[INFO] Подготовка к анализу трассировки...</div>
+        </div>
+        <div class="apology">Приносим свои извинения за недоставленные неудобства, нам очень жаль:(</div>
+        <div class="modal-bottom-bar"><button class="btn-retry" onclick="retryLinkCheck()">Повторить попытку</button></div>
+    </div>
+    <script>
+                function playSystemErrorSound() {
+                    try {
+                        const audioCtx = new AudioContext();
+                        const oscillator = audioCtx.createOscillator();
+                        const gainNode = audioCtx.createGain();
+                        oscillator.type = 'sawtooth'; oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+                        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime); oscillator.connect(gainNode);
+                        gainNode.connect(audioCtx.destination); oscillator.start(); oscillator.stop(audioCtx.currentTime + 0.25);
+                    } catch(e) { console.log(e); }
+                }
+
+                function retryLinkCheck() {
+                    runLinkValidationWithoutSound();
+                }
+
+                async function runLinkValidationWithSound() {
+                    playSystemErrorSound();
+                    await executeValidation();
+                }
+
+                async function runLinkValidationWithoutSound() {
+                    await executeValidation();
+                }
+
+                async function executeValidation() {
+                    const terminal = document.getElementById('terminalLog');
+                    if (!terminal) return;
+
+                    const params = new URLSearchParams(window.location.search);
+                    const target = params.get('target') || 'unknown';
+                    terminal.innerHTML = '<div class="cmd-input">C:\\UrbanRedactor\\System> run diagnostics.exe</div><div>[PROCESS] Сканирование пакетов...</div>';
+                    await new Promise(r => setTimeout(r, 400));
+                    terminal.innerHTML += '<div class="log-ok">&gt; Проверка структуры: [OK] Ссылка найдена в реестре.</div>';
+                    await new Promise(r => setTimeout(r, 300));
+                    try {
+                        const res = await fetch('https://googleapis.com', { mode: 'no-cors', cache: 'no-cache' });
+                        terminal.innerHTML += '<div class="log-ok">&gt; Порт назначения: [OK] Доступ к веб-шлюзу открыт.</div>';
+                        await new Promise(r => setTimeout(r, 200));
+                        if (target === 'support' || target === 'unknown') {
+                            terminal.innerHTML += '<div class="log-ok">&gt; Статус веб-узла: [OK] Удаленный хост отвечает стабильно.</div>';
+                        } else {
+                            terminal.innerHTML += '<div class="log-err">&gt; Статус веб-узла: [ОШИБКА 404] Целевой файл на сервере отсутствует.</div>';
+                        }
+                    } catch (error) {
+                        terminal.innerHTML += '<div class="log-err">&gt; Порт назначения: [ОШИБКА] Шлюз заблокирован провайдером.</div>';
+                    }
+                }
+                window.addEventListener('DOMContentLoaded', () => { runLinkValidationWithSound(); });
+    </script>
+</body>
+</html>

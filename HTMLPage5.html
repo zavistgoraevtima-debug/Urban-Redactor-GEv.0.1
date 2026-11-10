@@ -1,0 +1,185 @@
+﻿<!-- Код для HtmlPage5.html (Настройка проекта с интеграцией Яндекс Карт) -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanRedactor-GE — Создать проект</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1f2023;
+            color: #e3e3e3;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #1a73e8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .main-card {
+            background-color: #242528;
+            border: 1px solid #3c4043;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            padding: 28px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+            .form-group label {
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: #e3e3e3;
+            }
+
+            .form-group input[type="text"] {
+                width: 100%;
+                padding: 12px 14px;
+                background-color: #1f2023;
+                border: 1px solid #3c4043;
+                color: #ffffff;
+                font-size: 0.95rem;
+                border-radius: 8px;
+                outline: none;
+            }
+
+                .form-group input[type="text"]:focus {
+                    border-color: #1a73e8;
+                }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: #9aa0a6;
+            margin-top: -2px;
+        }
+
+        /* Зона холста карты */
+        .map-wrapper {
+            width: 100%;
+            height: 320px;
+            background-color: #121314;
+            border: 1px solid #3c4043;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Класс-фильтр для симуляции ночного режима на спутнике */
+        .map-wrapper.night-mode {
+            filter: invert(1) hue-rotate(180deg) brightness(0.6) contrast(1.2);
+        }
+
+        .time-checkbox-group {
+            display: flex;
+            gap: 24px;
+            padding-left: 2px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+            .checkbox-container input {
+                cursor: pointer;
+                width: 18px;
+                height: 18px;
+                accent-color: #1a73e8;
+            }
+
+        .btn-forward {
+            background-color: #ea4335;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: filter 0.2s;
+            box-shadow: 0 4px 12px rgba(234,67,53,0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+            .btn-forward:hover {
+                filter: brightness(1.1);
+            }
+    </style>
+    <!-- Подключаем бесплатное API Яндекс Карт, которое не просит никаких карт и профилей -->
+    <script src="https://yandex.ru" type="text/javascript"></script>
+</head>
+<body>
+    <h1 class="page-title">Создать новый проект</h1>
+    <div class="main-card">
+        <div class="form-group">
+            <label for="projName">Название проекта:</label>
+            <input type="text" id="projName" maxlength="35" value="Новый проект-1">
+            <div class="form-hint">максимум 35 символов</div>
+        </div>
+
+        <!-- Обертка карты с динамическим переключением ночного фильтра -->
+        <div class="map-wrapper" id="mapFrame">
+            <div id="map"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="projScale">Масштаб:</label>
+            <input type="text" id="projScale" readonly placeholder="масштаб карты (в пикселях)">
+        </div>
+        <div class="time-checkbox-group">
+            <label class="checkbox-container">
+                <input type="checkbox" id="timeNight">
+                <span>Ночь</span>
+            </label>
+            <label class="checkbox-container">
+                <input type="checkbox" id="timeDay" checked>
+                <span>День</span>
+            </label>
+        </div>
+        <button type="button" class="btn-forward" id="startProjectBtn">Вперёд!</button>
+    </div>
+    <script src="Script2.js"></script>
+</body>
+</html>

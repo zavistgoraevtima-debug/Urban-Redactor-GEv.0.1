@@ -1,0 +1,274 @@
+﻿<!-- Код для HtmlPage4.html (Страница Входа в систему) -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanRedactor-GE — Вход</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121314;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.2) 100%), url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .auth-sidebar {
+            width: 420px;
+            background-color: #2d2e31;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+            z-index: 10;
+            animation: slideDownPanel 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes slideDownPanel {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-element {
+            opacity: 0;
+            animation: fadeInContent 0.6s ease forwards;
+        }
+
+        @keyframes fadeInContent {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .del-1 {
+            animation-delay: 0.7s;
+        }
+
+        .del-2 {
+            animation-delay: 0.9s;
+        }
+
+        .del-3 {
+            animation-delay: 1.1s;
+        }
+
+        .del-4 {
+            animation-delay: 1.3s;
+        }
+
+        .brand-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: #1a73e8;
+            font-weight: 500;
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+            .form-group label {
+                font-size: 0.95rem;
+                color: #e3e3e3;
+                font-weight: 500;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px 14px;
+                background-color: #1f2023;
+                border: 1px solid #3c4043;
+                color: #ffffff;
+                font-size: 0.9rem;
+                border-radius: 8px;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+
+                .form-group input:focus {
+                    border-color: #1a73e8;
+                }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: #9aa0a6;
+            margin-top: -2px;
+        }
+
+        .toggle-mode-text {
+            font-size: 0.85rem;
+            color: #9aa0a6;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            color: #1a73e8;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            padding: 0 4px;
+        }
+
+            .toggle-btn:hover {
+                text-decoration: underline;
+            }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: #500000;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+
+            .btn-submit:hover {
+                filter: brightness(1.2);
+            }
+
+        .promo-content {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 5;
+        }
+
+        .promo-header {
+            opacity: 0;
+            animation: slideDownText 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
+
+        @keyframes slideDownText {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .promo-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-bottom: 10px;
+        }
+
+        .promo-subtitle {
+            font-size: 1.5rem;
+            color: #e3e3e3;
+            font-weight: 300;
+            opacity: 0.9;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .author-tag {
+            align-self: flex-end;
+            font-size: 1.1rem;
+            color: #9aa0a6;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: slideInRight 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ЛЕВАЯ ПАНЕЛЬ С АНИМАЦИЕЙ ВЫЛЕТА СВЕРХУ -->
+    <aside class="auth-sidebar" id="sidebarPanel">
+        <div class="fade-in-element del-1">
+            <h1 class="brand-title">UrbanRedactor-GE</h1>
+            <div class="section-subtitle">Страничка Авторизации</div>
+        </div>
+
+        <!-- ТОЛЬКО НЕОБХОДИМЫЕ ПОЛЯ ДЛЯ ВХОДА (ПОЧТА И АВАТАРКА УБРАНЫ) -->
+        <div id="dynamicFormFields">
+            <div class="form-group fade-in-element del-2">
+                <label for="nickname">Ваш Никнейм</label>
+                <input type="text" id="nickname" maxlength="16" placeholder="пример: Vanya22">
+                <div class="form-hint">максимум 16 символов</div>
+            </div>
+            <div class="form-group fade-in-element del-3">
+                <label for="userLogin">Ваш Логин</label>
+                <input type="text" id="userLogin" maxlength="16" placeholder="пример: @vanya22">
+                <div class="form-hint">максимум 16 символов</div>
+            </div>
+        </div>
+
+        <div class="toggle-mode-text fade-in-element del-4">
+            <span>Еще нет аккаунта?</span>
+            <button class="toggle-btn" type="button" onclick="goToRegister()">Регистрация</button>
+        </div>
+
+        <button class="btn-submit fade-in-element del-4" type="button" onclick="executeLogin()">Войти в систему</button>
+    </aside>
+
+    <!-- ПРАВАЯ СТОРОНА (ПРИВЕТСТВЕННЫЙ ТЕКСТ С ВЫЛЕТОМ ИЗ СВОИХ НАПРАВЛЕНИЙ) -->
+    <main class="promo-content">
+        <div class="promo-header">
+            <h2 class="promo-title">UrbanRedactor-GE.</h2>
+            <p class="promo-subtitle">Воплотите город своей мечты</p>
+        </div>
+        <div class="author-tag">Автор: Krossovok12</div>
+    </main>
+
+    <script>function goToRegister() { window.location.href = 'HtmlPage3.html'; }
+        function executeLogin() { window.location.href = 'HtmlPage1.html'; }</script>
+</body>
+</html>
