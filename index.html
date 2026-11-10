@@ -1,5 +1,4 @@
-﻿<!-- Скопируй это целиком в твой файл HtmlPage1.html (Главная страница) -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -107,6 +106,7 @@
             flex-direction: column;
             text-align: right;
             font-size: 0.85rem;
+            line-height: 1.4;
         }
 
             .pt .un {
@@ -336,7 +336,7 @@
     <header>
         <div class="hl">
             <span>☼</span>
-            <label class="sc"><input type="checkbox" id="theme-checkbox" onchange="H.t()"><span class="sl"></span></label>
+            <label class="sc"><input type="checkbox" id="theme-checkbox"><span class="sl"></span></label>
             <span>☾</span>
         </div>
         <div style="font-size:1.4rem;">UrbanRedactor-GE</div>
@@ -348,14 +348,14 @@
     <div class="mc">
         <aside>
             <div class="st">Другие настройки</div>
-            <span class="nl" onclick="H.c('https://discord.gg')">Поддержка</span>
+            <span class="nl" id="btnSupport">Поддержка</span>
             <a href="https://donationalerts.com" target="_blank" class="nl">Донат *ссылка*</a>
-            <span class="nl" onclick="H.c('HtmlPageShare.html')">Поделиться проекту</span>
+            <span class="nl" id="btnShare">Поделиться проектом</span>
         </aside>
         <main class="cw">
             <div style="font-size:0.8rem;color:var(--m);margin-bottom:8px;">v:0.01(Release)</div>
             <div class="bd"></div>
-            <a onclick="H.n()" class="btn"><span class="pi">+</span> Новый проект</a>
+            <a class="btn" id="btnNewProject"><span class="pi">+</span> Новый проект</a>
             <div style="font-size:1.3rem;margin-bottom:24px;">Мои Проекты:</div>
             <div class="empty">Здесь ничего нет :(</div>
         </main>
@@ -363,7 +363,7 @@
     <div class="mo" id="eM">
         <div class="ec">
             <div class="cp">+</div>
-            <div class="mtb"><span class="be" onclick="H.x()">Выйти</span></div>
+            <div class="mtb"><span class="be" id="btnExitModal">Выйти</span></div>
             <div class="eh">
                 <div class="et">Ой-ой, Что-то пошло не так...</div>
                 <div class="es">Ошибка 001, нет доступа к ссылке.</div>
@@ -374,45 +374,9 @@
                 <div>[INFO] Подготовка трассировки...</div>
             </div>
             <div class="ap">Приносим свои извинения, нам очень жаль:(</div>
-            <div class="mbb"><button class="br" onclick="H.r()">Повторить попытку</button></div>
+            <div class="mbb"><button class="br" id="btnRetryModal">Повторить попытку</button></div>
         </div>
     </div>
-    <script>
-                const H = {
-                    u: '',
-                    init() {
-                        const sn = localStorage.getItem('urban_username'), sm = localStorage.getItem('urban_email'), si = localStorage.getItem('urban_avatar');
-                        const c = document.getElementById('pC'), a = document.getElementById('uA'), l = document.getElementById('lL');
-                        if (sn && c && a) {
-                            if (l) l.style.display = 'none';
-                            let mm = 'Почта:***@gmail.com';
-                            if (sm && sm.includes('@')) mm = 'Почта:***@' + sm.split('@')[1];
-                            const tb = document.createElement('div'); tb.className = 'pt';
-                            tb.innerHTML = '<span class="un">' + sn + '</span><span class="um">' + mm + '</span>';
-                            c.insertBefore(tb, a);
-                            if (si) { a.style.backgroundImage = "url('" + si + "')"; a.classList.add('hi'); }
-                        }
-                    },
-                    n() { if (localStorage.getItem('urban_username')) window.location.href = 'HtmlPage5.html'; else window.location.href = 'HtmlPage3.html'; },
-                    s() { try { const ctx = new AudioContext(), o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(150, ctx.currentTime); g.gain.setValueAtTime(0.15, ctx.currentTime); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.25); } catch(e) {} },
-                    t() { const h = document.documentElement, c = document.getElementById('theme-checkbox'); if (c && c instanceof HTMLInputElement) h.setAttribute('data-theme', c.checked ? 'light' : 'dark'); },
-                    c(u) { this.u = u; document.getElementById('eM').style.display = 'flex'; this.v(true); },
-                    r() { this.v(false); },
-                    async v(p) {
-                        if (p) this.s(); const t = document.getElementById('tL'); if (!t) return;
-                        t.innerHTML = '<div>C:\\UrbanRedactor\\System> run diagnostics.exe</div><div>[PROCESS] Сканирование пакетов...</div>';
-                        await new Promise(r => setTimeout(r, 400));
-                        if (this.u && this.u.trim()) t.innerHTML += '<div class="lo">&gt; Структура: [OK] Реестр найден.</div>'; else { t.innerHTML += '<div class="le">&gt; Структура: [КРИТ] Адрес пуст.</div>'; return; }
-                        await new Promise(r => setTimeout(r, 300));
-                        try {
-                            await fetch('https://googleapis.com', { mode: 'no-cors', cache: 'no-cache' });
-                            t.innerHTML += '<div class="lo">&gt; Порт: [OK] Шлюз открыт.</div>'; await new Promise(r => setTimeout(r, 200));
-                            t.innerHTML += this.u.includes('.html') ? '<div class="le">&gt; Хост: [ОШИБКА 404] Файл отсутствует.</div>' : '<div class="lo">&gt; Хост: [OK] Сервер стабилен.</div>';
-                        } catch (e) { t.innerHTML += '<div class="le">&gt; Порт: [ОШИБКА] Шлюз заблокирован.</div>'; }
-                    },
-                    x() { document.getElementById('eM').style.display = 'none'; }
-                };
-                window.addEventListener('DOMContentLoaded', () => H.init());
-    </script>
+    <script src="Script1.js"></script>
 </body>
 </html>
