@@ -50,7 +50,7 @@
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
                 // Универсальный относительный переход в корень сайта для гарантированного обхода 404
-                window.location.href = './';
+                window.location.href = 'https://github.io';
             });
         }
     });
