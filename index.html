@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>UrbanRedactor-GE</title>
     <style>
         [data-theme="dark"] {
@@ -37,7 +37,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: 'Roboto',Arial,sans-serif;
         }
 
         body {
@@ -47,7 +47,7 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s,color 0.2s;
         }
 
         header {
@@ -68,13 +68,6 @@
             user-select: none;
         }
 
-        .theme-symbol {
-            font-size: 1.3rem;
-            color: var(--icon-color);
-            line-height: 1;
-            font-weight: bold;
-        }
-
         .switch-container {
             display: inline-block;
             position: relative;
@@ -82,47 +75,44 @@
             height: 26px;
         }
 
-        .switch-container input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+            .switch-container input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
 
         .slider {
             position: absolute;
             cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-color: var(--switch-bg);
             transition: .2s;
             border-radius: 30px;
         }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: #2d2e31;
-            transition: .2s;
-            border-radius: 50%;
-        }
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: 3px;
+                bottom: 3px;
+                background-color: #2d2e31;
+                transition: .2s;
+                border-radius: 50%;
+            }
 
         input:checked + .slider {
             background-color: var(--switch-active);
         }
 
-        input:checked + .slider:before {
-            transform: translateX(22px);
-            background-color: #f1f3f4;
-        }
-
-        .site-title {
-            font-size: 1.4rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
+            input:checked + .slider:before {
+                transform: translateX(22px);
+                background-color: #f1f3f4;
+            }
 
         .profile-area {
             display: flex;
@@ -138,22 +128,21 @@
             line-height: 1.4;
         }
 
-        .profile-text-block .user-name {
-            font-weight: 500;
-            color: var(--text-color);
-        }
+            .profile-text-block .user-name {
+                font-weight: 500;
+                color: var(--text-color);
+            }
 
-        .profile-text-block .user-mail {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-        }
+            .profile-text-block .user-mail {
+                color: var(--text-muted);
+                font-size: 0.75rem;
+            }
 
         .login-link {
             color: var(--accent-blue);
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: filter 0.2s;
             cursor: pointer;
         }
 
@@ -169,15 +158,15 @@
             background-position: center;
         }
 
-        .avatar-circle::before {
-            content: "👤";
-            font-size: 1.2rem;
-            filter: grayscale(1) opacity(0.5);
-        }
+            .avatar-circle::before {
+                content: "👤";
+                font-size: 1.2rem;
+                filter: grayscale(1) opacity(0.5);
+            }
 
-        .avatar-circle.has-image::before {
-            display: none;
-        }
+            .avatar-circle.has-image::before {
+                display: none;
+            }
 
         .main-container {
             display: flex;
@@ -210,12 +199,7 @@
             text-decoration: none;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: color 0.2s, filter 0.2s;
             font-weight: 400;
-        }
-
-        .nav-link:hover {
-            color: var(--text-color);
         }
 
         .content-wrapper {
@@ -223,12 +207,6 @@
             padding: 24px 40px;
             display: flex;
             flex-direction: column;
-        }
-
-        .version-tag {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
         }
 
         .blue-divider {
@@ -252,30 +230,23 @@
             cursor: pointer;
         }
 
-        .btn-new-project-link .plus-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background-color: var(--accent-blue);
-            color: white;
-            border-radius: 50%;
-            font-weight: bold;
-            font-size: 1.3rem;
-            transition: filter 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        }
+            .btn-new-project-link .plus-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+                background-color: var(--accent-blue);
+                color: white;
+                border-radius: 50%;
+                font-weight: bold;
+                font-size: 1.3rem;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            }
 
-        .btn-new-project-link:hover .plus-icon {
-            filter: brightness(0.8);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 24px;
-        }
+            .btn-new-project-link:hover .plus-icon {
+                filter: brightness(0.8);
+            }
 
         .empty-projects-state {
             flex: 0.6;
@@ -291,43 +262,23 @@
 </head>
 <body>
     <header>
-        <div class="header-left">
-            <span>☼</span>
-            <label class="switch-container">
-                <input type="checkbox" id="theme-checkbox">
-                <span class="slider"></span>
-            </label>
-            <span>☾</span>
-        </div>
-        <div class="site-title">UrbanRedactor-GE</div>
-        <div class="profile-area" id="profileContainer">
-            <!-- Учли правильный регистр папки HTMLPage3 -->
-            <a href="HTMLPage3/HTMLPage3.html" class="login-link" id="loginLink">Войти</a>
-            <div class="avatar-circle" id="userAvatar"></div>
-        </div>
+        <div class="header-left"><span>☼</span><label class="switch-container"><input type="checkbox" id="theme-checkbox"><span class="slider"></span></label><span>☾</span></div>
+        <div style="font-size:1.4rem;font-weight:500;">UrbanRedactor-GE</div>
+        <div class="profile-area" id="profileContainer"><a href="HTMLPage3/HTMLPage3.html" class="login-link" id="loginLink">Войти</a><div class="avatar-circle" id="userAvatar"></div></div>
     </header>
-
     <div class="main-container">
         <aside>
-            <div class="sidebar-title">Другие настройки</div>
-            <span class="nav-link">Поддержка</span>
-            <a href="https://donationalerts.com" target="_blank" class="nav-link">Донат *ссылка*</a>
-            <span class="nav-link">Поделиться своим проектом</span>
+            <div class="sidebar-title">Другие настройки</div><span class="nav-link">Поддержка</span><a href="https://donationalerts.com" target="_blank" class="nav-link">Донат *ссылка*</a><span class="nav-link">Поделиться своим проектом</span>
         </aside>
         <main class="content-wrapper">
-            <div class="version-tag">v:0.01(Release)</div>
-            <div class="blue-divider"></div>
-            <a id="btnNewProject" class="btn-new-project-link">
-                <span class="plus-icon">+</span> Новый проект
-            </a>
-            <div class="section-title">Мои Проекты:</div>
-            <div class="empty-projects-state">
-                Здесь ничего нет :(
-            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">v:0.01(Release)</div><div class="blue-divider"></div>
+            <a id="btnNewProject" class="btn-new-project-link"><span class="plus-icon">+</span> Новый проект</a>
+            <div style="font-size:1.3rem;font-weight:500;margin-bottom:24px;">Мои Проекты:</div>
+            <div class="empty-projects-state">Здесь ничего нет :(</div>
         </main>
     </div>
-
-    <!-- Подключаем чистый внешний JS-файл -->
-    <script src="ScriptIndex.js"></script>
+    <script>
+                (function(){window.addEventListener('DOMContentLoaded',function(){var sn=localStorage.getItem('urban_username'),sm=localStorage.getItem('urban_email'),si=localStorage.getItem('urban_avatar'),c=document.getElementById('profileContainer'),a=document.getElementById('userAvatar'),l=document.getElementById('loginLink'),t=document.getElementById('theme-checkbox'),b=document.getElementById('btnNewProject');if(sn&&c&&a){if(l)l.style.display='none';let m='Почта:***@gmail.com';if(sm&&sm.includes('@')){m='Почта:***@'+sm.split('@')[1];}var tb=document.createElement('div');tb.className='profile-text-block';tb.innerHTML='<span class="user-name">'+sn+'</span><span class="user-mail">'+m+'</span>';c.insertBefore(tb,a);if(si){a.style.backgroundImage="url('"+si+"')";a.classList.add('has-image');}}if(t){t.addEventListener('change',function(){var h=document.documentElement;if(t instanceof HTMLInputElement){h.setAttribute('data-theme',t.checked?'light':'dark');}});}if(b){b.addEventListener('click',function(){if(localStorage.getItem('urban_username')){window.location.href='HTMLPage5/HTMLPage5.html';}else{window.location.href='HTMLPage3/HTMLPage3.html';}});}});})();
+    </script>
 </body>
 </html>
