@@ -1,335 +1,37 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>UrbanRedactor-GE</title>
     <style>
-        [data-theme="dark"] {
-            --b: #1f2023;
-            --h: #2d2e31;
-            --s: #242528;
-            --t: #e3e3e3;
-            --m: #9aa0a6;
-            --l: #1a73e8;
-        }
-
-        [data-theme="light"] {
-            --b: #f8f9fa;
-            --h: #ffffff;
-            --s: #f1f3f4;
-            --t: #202124;
-            --m: #70757a;
-            --l: #1a73e8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial,sans-serif;
-        }
-
-        body {
-            background: var(--b);
-            color: var(--t);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        header {
-            background: var(--h);
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-        }
-
-        .hl, .pa {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            user-select: none;
-        }
-
-        .sc {
-            display: inline-block;
-            position: relative;
-            width: 48px;
-            height: 26px;
-        }
-
-            .sc input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-        .sl {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #5f6368;
-            transition: .2s;
-            border-radius: 30px;
-        }
-
-            .sl:before {
-                position: absolute;
-                content: "";
-                height: 20px;
-                width: 20px;
-                left: 3px;
-                bottom: 3px;
-                background: #2d2e31;
-                transition: .2s;
-                border-radius: 50%;
-            }
-
-        input:checked + .sl {
-            background: #fff;
-        }
-
-            input:checked + .sl:before {
-                transform: translateX(22px);
-                background: #f1f3f4;
-            }
-
-        .pt {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-            .pt .un {
-                font-weight: 500;
-            }
-
-            .pt .um {
-                color: var(--m);
-                font-size: 0.75rem;
-            }
-
-        .ll {
-            color: var(--l);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .ac {
-            width: 38px;
-            height: 38px;
-            background: #5f6368;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-        }
-
-            .ac::before {
-                content: "👤";
-                font-size: 1.2rem;
-                filter: grayscale(1) opacity(0.5);
-            }
-
-            .ac.hi::before {
-                display: none;
-            }
-
-        .mc {
-            display: flex;
-            flex: 1;
-            height: calc(100vh - 64px);
-        }
-
-        aside {
-            width: 230px;
-            background: var(--s);
-            padding: 28px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border-right: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .st {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .nl {
-            color: var(--m);
-            text-decoration: none;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-            .nl:hover {
-                color: var(--t);
-            }
-
-        .cw {
-            flex: 1;
-            padding: 24px 40px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .bd {
-            height: 2px;
-            background: var(--l);
-            width: 100%;
-            margin-bottom: 28px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--t);
-            text-decoration: none;
-            margin-bottom: 36px;
-            cursor: pointer;
-        }
-
-            .btn .pi {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 30px;
-                height: 30px;
-                background: var(--l);
-                color: #fff;
-                border-radius: 50%;
-                font-weight: bold;
-            }
-
-        .empty {
-            flex: 0.6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--m);
-            font-size: 1.1rem;
-        }
-
-        .mo {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ec {
-            background: #2d2e31;
-            width: 540px;
-            padding: 24px;
-            border-radius: 12px;
-            position: relative;
-            color: #e3e3e3;
-        }
-
-        .mtb {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .be {
-            color: #9aa0a6;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .eh {
-            margin: 10px 0 20px;
-            border-left: 3px solid #ea4335;
-            padding-left: 12px;
-        }
-
-        .et {
-            color: #ea4335;
-            font-size: 1.15rem;
-        }
-
-        .es {
-            color: #ea4335;
-            font-size: 0.9rem;
-        }
-
-        .mm {
-            font-size: 1.3rem;
-            color: var(--l);
-            margin-bottom: 14px;
-        }
-
-        .tb {
-            background: #121314;
-            border: 1px solid #3c4043;
-            border-radius: 6px;
-            padding: 14px;
-            font-family: monospace;
-            color: #00ff66;
-            min-height: 110px;
-        }
-
-            .tb div {
-                margin-bottom: 4px;
-            }
-
-            .tb .le {
-                color: #ea4335;
-            }
-
-            .tb .lo {
-                color: #34a853;
-            }
-
-        .ap {
-            color: #9aa0a6;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .cp {
-            position: absolute;
-            right: 24px;
-            bottom: 60px;
-            font-size: 2rem;
-            color: #202124;
-        }
-
-        .mbb {
-            margin-top: 20px;
-            padding-top: 14px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .br {
-            background: none;
-            border: none;
-            color: #9aa0a6;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
+        [data-theme="dark"]{--b:#1f2023;--h:#2d2e31;--s:#242528;--t:#e3e3e3;--m:#9aa0a6;--l:#1a73e8;}
+        [data-theme="light"]{--b:#f8f9fa;--h:#ffffff;--s:#f1f3f4;--t:#202124;--m:#70757a;--l:#1a73e8;}
+        *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
+        body{background:var(--b);color:var(--t);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+        header{background:var(--h);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid rgba(0,0,0,0.08);}
+        .hl,.pa{display:flex;align-items:center;gap:12px;user-select:none;}
+        .sc{display:inline-block;position:relative;width:48px;height:26px;}
+        .sc input{opacity:0;width:0;height:0;}
+        .sl{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#5f6368;transition:.2s;border-radius:30px;}
+        .sl:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#2d2e31;transition:.2s;border-radius:50%;}
+        input:checked+.sl{background:#fff;}
+        input:checked+.sl:before{transform:translateX(22px);background:#f1f3f4;}
+        .pt{display:flex;flex-direction:column;text-align:right;font-size:0.85rem;line-height:1.4;}
+        .pt .un{font-weight:500;} .pt .um{color:var(--m);font-size:0.75rem;}
+        .ll{color:var(--l);text-decoration:none;font-size:0.95rem;font-weight:500;cursor:pointer;}
+        .ac{width:38px;height:38px;background:#5f6368;border-radius:50%;display:flex;align-items:center;justify-content:center;background-size:cover;}
+        .ac::before{content:"👤";font-size:1.2rem;filter:grayscale(1) opacity(0.5);}
+        .ac.hi::before{display:none;}
+        .mc{display:flex;flex:1;height:calc(100vh - 64px);}
+        aside{width:230px;background:var(--s);padding:28px 20px;display:flex;flex-direction:column;gap:18px;border-right:1px solid rgba(0,0,0,0.05);}
+        .st{font-size:0.85rem;text-transform:uppercase;font-weight:700;}
+        .nl{color:var(--m);text-decoration:none;font-size:0.95rem;cursor:pointer;}
+        .nl:hover{color:var(--t);}
+        .cw{flex:1;padding:24px 40px;display:flex;flex-direction:column;}
+        .bd{height:2px;background:var(--l);width:100%;margin-bottom:28px;}
+        .btn{display:inline-flex;align-items:center;gap:12px;color:var(--t);text-decoration:none;margin-bottom:36px;cursor:pointer;}
+        .btn .pi{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--l);color:#fff;border-radius:50%;font-weight:bold;}
+        .empty{flex:0.6;display:flex;align-items:center;justify-content:center;color:var(--m);font-size:1.1rem;}
     </style>
 </head>
 <body>
@@ -360,23 +62,64 @@
             <div class="empty">Здесь ничего нет :(</div>
         </main>
     </div>
-    <div class="mo" id="eM">
-        <div class="ec">
-            <div class="cp">+</div>
-            <div class="mtb"><span class="be" id="btnExitModal">Выйти</span></div>
-            <div class="eh">
-                <div class="et">Ой-ой, Что-то пошло не так...</div>
-                <div class="es">Ошибка 001, нет доступа к ссылке.</div>
-            </div>
-            <div class="mm">Пожалуйста повторите попытку входа</div>
-            <div class="tb" id="tL">
-                <div>C:\UrbanRedactor\System> run diagnostics.exe</div>
-                <div>[INFO] Подготовка трассировки...</div>
-            </div>
-            <div class="ap">Приносим свои извинения, нам очень жаль:(</div>
-            <div class="mbb"><button class="br" id="btnRetryModal">Повторить попытку</button></div>
-        </div>
-    </div>
-    <script src="Script1.js"></script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var c = document.getElementById('pC');
+            var a = document.getElementById('uA');
+            var l = document.getElementById('lL');
+            if (c && a) {
+                var sn = localStorage.getItem('urban_username');
+                var sm = localStorage.getItem('urban_email');
+                var si = localStorage.getItem('urban_avatar');
+                if (sn) {
+                    if (l) l.style.display = 'none';
+                    var mm = 'Почта:***@gmail.com';
+                    if (sm && sm.includes('@')) mm = 'Почта:***@' + sm.split('@');
+                    var tb = document.createElement('div');
+                    tb.className = 'pt';
+                    tb.innerHTML = '<span class="un">' + sn + '</span><span class="um">' + mm + '</span>';
+                    c.insertBefore(tb, a);
+                    if (si) {
+                        a.style.backgroundImage = "url('" + si + "')";
+                        a.classList.add('hi');
+                    }
+                }
+            }
+
+            var btnNewProject = document.getElementById('btnNewProject');
+            var btnSupport = document.getElementById('btnSupport');
+            var btnShare = document.getElementById('btnShare');
+            var themeCheckbox = document.getElementById('theme-checkbox');
+
+            if (btnNewProject) {
+                btnNewProject.addEventListener('click', function () {
+                    if (localStorage.getItem('urban_username')) {
+                        window.location.href = 'HtmlPage5.html';
+                    } else {
+                        window.location.href = 'HtmlPage3.html';
+                    }
+                });
+            }
+            if (btnSupport) {
+                btnSupport.addEventListener('click', function () {
+                    window.open('https://discord.gg', '_blank');
+                });
+            }
+            if (btnShare) {
+                btnShare.addEventListener('click', function () {
+                    window.location.href = 'HtmlPageShare.html';
+                });
+            }
+            if (themeCheckbox) {
+                themeCheckbox.addEventListener('change', function () {
+                    var html = document.documentElement;
+                    if (themeCheckbox instanceof HTMLInputElement) {
+                        html.setAttribute('data-theme', themeCheckbox.checked ? 'light' : 'dark');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
