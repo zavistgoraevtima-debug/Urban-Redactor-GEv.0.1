@@ -3,7 +3,6 @@
     var avatarDataUrl = '';
 
     window.addEventListener('DOMContentLoaded', function () {
-        // --- ПРОШИВКА ЛОГИКИ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (INDEX.HTML) ---
         var c = document.getElementById('pC');
         var a = document.getElementById('uA');
         var l = document.getElementById('lL');
@@ -72,7 +71,6 @@
             });
         }
 
-        // --- ПРОШИВКА ЛОГИКИ ДЛЯ СТРАНИЦЫ РЕГИСТРАЦИИ (HTMLPAGE3.HTML) ---
         var avatarBtn = document.getElementById('avatarBtn');
         var fileInput = document.getElementById('fileInput');
         var toLoginBtn = document.getElementById('toLoginBtn');
@@ -117,7 +115,11 @@
                 if (avatarDataUrl) {
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
-                window.location.href = 'https://github.io';
+
+                // ЖЕЛЕЗОБЕТОННЫЙ ВАРИАНТ ПЕРЕХОДА:
+                // Скрипт просто берет текущий адрес страницы в браузере (HtmlPage3.html) 
+                // и заменяет его имя на index.html, сохраняя правильный путь к твоему репозиторию гитхаба!
+                window.location.href = window.location.href.replace('HtmlPage3.html', 'index.html');
             });
         }
     });
