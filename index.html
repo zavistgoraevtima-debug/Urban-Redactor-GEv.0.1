@@ -10,116 +10,241 @@
         body{background:var(--b);color:var(--t);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
         header{background:var(--h);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid rgba(0,0,0,0.08);}
         .hl,.pa{display:flex;align-items:center;gap:12px;user-select:none;}
-        .sc{display:inline-block;position:relative;width:48px;height:26px;}
-        .sc input{opacity:0;width:0;height:0;}
+        .sc{display:inline-block;position:relative;width:48px;height:26px;} .sc input{opacity:0;width:0;height:0;}
         .sl{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#5f6368;transition:.2s;border-radius:30px;}
         .sl:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#2d2e31;transition:.2s;border-radius:50%;}
-        input:checked+.sl{background:#fff;}
-        input:checked+.sl:before{transform:translateX(22px);background:#f1f3f4;}
-        .pt{display:flex;flex-direction:column;text-align:right;font-size:0.85rem;line-height:1.4;}
-        .pt .un{font-weight:500;} .pt .um{color:var(--m);font-size:0.75rem;}
+        input:checked+.sl{background:#fff;} input:checked+.sl:before{transform:translateX(22px);background:#f1f3f4;}
+        .pt{display:flex;flex-direction:column;text-align:right;font-size:0.85rem;}
         .ll{color:var(--l);text-decoration:none;font-size:0.95rem;font-weight:500;cursor:pointer;}
         .ac{width:38px;height:38px;background:#5f6368;border-radius:50%;display:flex;align-items:center;justify-content:center;background-size:cover;}
-        .ac::before{content:"👤";font-size:1.2rem;filter:grayscale(1) opacity(0.5);}
-        .ac.hi::before{display:none;}
+        .ac::before{content:"👤";font-size:1.2rem;filter:grayscale(1) opacity(0.5);} .ac.hi::before{display:none;}
         .mc{display:flex;flex:1;height:calc(100vh - 64px);}
         aside{width:230px;background:var(--s);padding:28px 20px;display:flex;flex-direction:column;gap:18px;border-right:1px solid rgba(0,0,0,0.05);}
         .st{font-size:0.85rem;text-transform:uppercase;font-weight:700;}
-        .nl{color:var(--m);text-decoration:none;font-size:0.95rem;cursor:pointer;}
-        .nl:hover{color:var(--t);}
+        .nl{color:var(--m);text-decoration:none;font-size:0.95rem;cursor:pointer;} .nl:hover{color:var(--t);}
         .cw{flex:1;padding:24px 40px;display:flex;flex-direction:column;}
         .bd{height:2px;background:var(--l);width:100%;margin-bottom:28px;}
         .btn{display:inline-flex;align-items:center;gap:12px;color:var(--t);text-decoration:none;margin-bottom:36px;cursor:pointer;}
         .btn .pi{display:flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--l);color:#fff;border-radius:50%;font-weight:bold;}
         .empty{flex:0.6;display:flex;align-items:center;justify-content:center;color:var(--m);font-size:1.1rem;}
+
+        /* СТИЛИ ЭКРАНОВ И ОКОН ОФОРМЛЕНИЯ */
+        .screen-view { display: none; width: 100%; height: 100%; }
+        .screen-view.active-screen { display: flex; }
+        
+        /* Экран Регистрации */
+        #screenRegister { background-image: linear-gradient(to right, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.2) 100%), url('image_VtLq8s.png'); background-size: cover; background-position: center; position: fixed; top: 0; left: 0; z-index: 999; }
+        .as{width:420px;background:#2d2e31;padding:40px 32px;display:flex;flex-direction:column;height:100vh;}
+        .fg{margin-bottom:20px;display:flex;flex-direction:column;gap:6px;}
+        .fg input{width:100%;padding:12px;background:#1f2023;border:1px solid #3c4043;color:#fff;border-radius:8px;outline:none;}
+        .ab{width:80px;height:80px;background:#5f6368;border-radius:50%;cursor:pointer;border:none;background-size:cover;background-position:center;align-self:center;margin:20px 0;display:flex;align-items:center;justify-content:center;}
+        .ab::before{content:"👤";font-size:2.2rem;opacity:0.4;} .ab.hi::before{display:none;}
+        .sbtn{width:100%;padding:14px;background:#500000;color:#fff;border:none;font-weight:bold;border-radius:8px;cursor:pointer;text-transform:uppercase;}
+        .pc{flex:1;padding:60px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;}
+        
+        /* Экран Создания Проекта */
+        #screenNewProject { position: fixed; top:0; left:0; background:#1f2023; z-index: 998; padding: 40px; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .mcard { background:#242528; border:1px solid #3c4043; border-radius:16px; width:100%; max-width:500px; padding:28px; display:flex; flex-direction:column; gap:24px; }
+        .mwrap { width:100%; height:320px; background:#121314; border:1px solid #3c4043; border-radius:10px; overflow:hidden; position:relative; }
+        #map { width:100%; height:100%; }
+        .mwrap.night-mode { filter: invert(1) hue-rotate(180deg) brightness(0.6); }
+        .cgrp { display:flex; gap:24px; } .cbox { display:flex; align-items:center; gap:10px; cursor:pointer; }
+        .fbtn { background:#ea4335; color:#fff; border:none; font-size:1.1rem; font-weight:bold; padding:14px; width:100%; border-radius:8px; cursor:pointer; text-transform:uppercase; }
     </style>
+    <script src="https://yandex.ru" type="text/javascript"></script>
 </head>
 <body>
-    <header>
-        <div class="hl">
-            <span>☼</span>
-            <label class="sc"><input type="checkbox" id="theme-checkbox"><span class="sl"></span></label>
-            <span>☾</span>
+
+    <!-- ЭКРАН 1: ГЛАВНОЕ МЕНЮ (ПО УМОЛЧАНИЮ АКТИВЕН) -->
+    <div class="screen-view active-screen" id="screenMenu" style="flex-direction: column;">
+        <header>
+            <div class="hl">
+                <span>☼</span>
+                <label class="sc"><input type="checkbox" id="theme-checkbox"><span class="sl"></span></label>
+                <span>☾</span>
+            </div>
+            <div style="font-size:1.4rem;font-weight:500;">UrbanRedactor-GE</div>
+            <div class="pa" id="pC">
+                <a class="ll" id="lL">Войти</a>
+                <div class="ac" id="uA"></div>
+            </div>
+        </header>
+        <div class="mc">
+            <aside>
+                <div class="st">Другие настройки</div>
+                <span class="nl">Поддержка</span>
+                <a href="https://donationalerts.com" target="_blank" class="nl">Донат *ссылка*</a>
+                <span class="nl">Поделиться проектом</span>
+            </aside>
+            <main class="cw">
+                <div style="font-size:0.8rem;color:var(--m);margin-bottom:8px;">v:0.01(Release)</div>
+                <div class="bd"></div>
+                <a class="btn" id="btnMainNewProject"><span class="pi">+</span> Новый проект</a>
+                <div style="font-size:1.3rem;margin-bottom:24px;">Мои Проекты:</div>
+                <div class="empty">Здесь ничего нет :(</div>
+            </main>
         </div>
-        <div style="font-size:1.4rem;">UrbanRedactor-GE</div>
-        <div class="pa" id="pC">
-            <a href="HtmlPage3.html" class="ll" id="lL">Войти</a>
-            <div class="ac" id="uA"></div>
-        </div>
-    </header>
-    <div class="mc">
-        <aside>
-            <div class="st">Другие настройки</div>
-            <span class="nl" id="btnSupport">Поддержка</span>
-            <a href="https://donationalerts.com" target="_blank" class="nl">Донат *ссылка*</a>
-            <span class="nl" id="btnShare">Поделиться проектом</span>
+    </div>
+
+    <!-- ЭКРАН 2: ОКНО РЕГИСТРАЦИИ (ВСплывает поверх без перезагрузок) -->
+    <div class="screen-view" id="screenRegister">
+        <aside class="as">
+            <div>
+                <h1 style="font-size:1.4rem;color:#fff;">UrbanRedactor-GE</h1>
+                <div style="font-size:0.95rem;color:#1a73e8;margin-bottom:35px;">Страничка Регистрации</div>
+            </div>
+            <div>
+                <div class="fg"><label>Ваш Никнейм</label><input type="text" id="nickname" placeholder="Vanya22"></div>
+                <div class="fg"><label>Ваш Логин</label><input type="text" placeholder="@vanya22"></div>
+                <div class="fg"><label>Ваша Почта</label><input type="email" id="userEmail" placeholder="vanya22@gmail.com"></div>
+                <div class="avatar-container fg">
+                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                    <button type="button" id="avatarBtn" class="ab"></button>
+                    <div style="font-size:0.85rem;color:#9aa0a6;text-align:center;">Сменить аватар</div>
+                </div>
+            </div>
+            <button class="sbtn" id="submitActionBtn" type="button">Зарегистрироваться</button>
         </aside>
-        <main class="cw">
-            <div style="font-size:0.8rem;color:var(--m);margin-bottom:8px;">v:0.01(Release)</div>
-            <div class="bd"></div>
-            <a class="btn" id="btnNewProject"><span class="pi">+</span> Новый проект</a>
-            <div style="font-size:1.3rem;margin-bottom:24px;">Мои Проекты:</div>
-            <div class="empty">Здесь ничего нет :(</div>
+        <main class="pc">
+            <div><h2 style="font-size:3.5rem;">UrbanRedactor-GE.</h2><p style="font-size:1.5rem;">Воплотите город своей мечты</p></div>
+            <div style="align-self:flex-end;font-size:1.1rem;color:#9aa0a6;">Автор: Krossovok12</div>
         </main>
     </div>
 
+    <!-- ЭКРАН 3: НАСТРОЙКА КАРТЫ ПРОЕКТА -->
+    <div class="screen-view" id="screenNewProject">
+        <h1 style="font-size:1.4rem;color:#1a73e8;margin-bottom:24px;text-transform:uppercase;">Создать новый проект</h1>
+        <div class="mcard">
+            <div class="fg"><label>Название проекта:</label><input type="text" id="projName" value="Новый проект-1"></div>
+            <div class="mwrap" id="mapFrame"><div id="map"></div></div>
+            <div class="fg"><label>Масштаб:</label><input type="text" id="projScale" readonly value="39136 px/px"></div>
+            <div class="cgrp">
+                <label class="cbox"><input type="checkbox" id="timeNight"><span>Ночь</span></label>
+                <label class="cbox"><input type="checkbox" id="timeDay" checked><span>День</span></label>
+            </div>
+            <button type="button" class="fbtn" id="startProjectBtn">Вперёд!</button>
+        </div>
+    </div>
+
     <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            var c = document.getElementById('pC');
-            var a = document.getElementById('uA');
-            var l = document.getElementById('lL');
-            if (c && a) {
-                var sn = localStorage.getItem('urban_username');
-                var sm = localStorage.getItem('urban_email');
-                var si = localStorage.getItem('urban_avatar');
-                if (sn) {
-                    if (l) l.style.display = 'none';
-                    var mm = 'Почта:***@gmail.com';
-                    if (sm && sm.includes('@')) mm = 'Почта:***@' + sm.split('@');
-                    var tb = document.createElement('div');
-                    tb.className = 'pt';
-                    tb.innerHTML = '<span class="un">' + sn + '</span><span class="um">' + mm + '</span>';
-                    c.insertBefore(tb, a);
-                    if (si) {
-                        a.style.backgroundImage = "url('" + si + "')";
-                        a.classList.add('hi');
-                    }
-                }
-            }
+        (function () {
+            var avatarDataUrl = '';
+            var yandexMap = null;
 
-            var btnNewProject = document.getElementById('btnNewProject');
-            var btnSupport = document.getElementById('btnSupport');
-            var btnShare = document.getElementById('btnShare');
-            var themeCheckbox = document.getElementById('theme-checkbox');
+            window.addEventListener('DOMContentLoaded', function () {
+                // Переключатели экранов без перезагрузок страниц
+                var scrMenu = document.getElementById('screenMenu');
+                var scrRegister = document.getElementById('screenRegister');
+                var scrNewProject = document.getElementById('screenNewProject');
 
-            if (btnNewProject) {
-                btnNewProject.addEventListener('click', function () {
-                    if (localStorage.getItem('urban_username')) {
-                        window.location.href = 'HtmlPage5.html';
-                    } else {
-                        window.location.href = 'HtmlPage3.html';
-                    }
-                });
-            }
-            if (btnSupport) {
-                btnSupport.addEventListener('click', function () {
-                    window.open('https://discord.gg', '_blank');
-                });
-            }
-            if (btnShare) {
-                btnShare.addEventListener('click', function () {
-                    window.location.href = 'HtmlPageShare.html';
-                });
-            }
-            if (themeCheckbox) {
-                themeCheckbox.addEventListener('change', function () {
-                    var html = document.documentElement;
-                    if (themeCheckbox instanceof HTMLInputElement) {
-                        html.setAttribute('data-theme', themeCheckbox.checked ? 'light' : 'dark');
-                    }
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+                var btnLogin = document.getElementById('lL');
+                var btnMainNewProject = document.getElementById('btnMainNewProject');
+                var submitBtn = document.getElementById('submitActionBtn');
+                var startBtn = document.getElementById('startProjectBtn');
+                
+                var avatarBtn = document.getElementById('avatarBtn');
+                var fileInput = document.getElementById('fileInput');
+var nightBox = document.getElementById('timeNight');
+var dayBox = document.getElementById('timeDay');
+var mapFrame = document.getElementById('mapFrame');
+// Проверка сессии при запуске сайта
+updateProfileUI();
+if (btnLogin) {
+btnLogin.addEventListener('click', function() {
+scrRegister.classList.add('active-screen');
+});
+}
+if (btnMainNewProject) {
+btnMainNewProject.addEventListener('click', function() {
+if (localStorage.getItem('urban_username')) {
+scrNewProject.classList.add('active-screen');
+initYandexMap();
+} else {
+scrRegister.classList.add('active-screen');
+}
+});
+}
+if (avatarBtn && fileInput) {
+avatarBtn.addEventListener('click', function () { fileInput.click(); });
+}
+if (fileInput) {
+fileInput.addEventListener('change', function (event) {
+var input = event.target;
+if (input && input instanceof HTMLInputElement && input.files && input.files[0]) {
+var reader = new FileReader();
+reader.onload = function (e) {
+if (avatarBtn && e.target && e.target.result && typeof e.target.result === 'string') {
+avatarDataUrl = e.target.result;
+avatarBtn.style.backgroundImage = "url('" + avatarDataUrl + "')";
+avatarBtn.classList.add('hi');
+}
+};
+reader.readAsDataURL(input.files[0]);
+}
+});
+}
+if (submitBtn) {
+submitBtn.addEventListener('click', function () {
+var nameField = document.getElementById('nickname');
+var mailField = document.getElementById('userEmail');
+if (nameField && nameField instanceof HTMLInputElement) localStorage.setItem('urban_username', nameField.value || 'Пользователь');
+if (mailField && mailField instanceof HTMLInputElement) localStorage.setItem('urban_email', mailField.value || 'example@gmail.com');
+if (avatarDataUrl) localStorage.setItem('urban_avatar', avatarDataUrl);
+scrRegister.classList.remove('active-screen');
+updateProfileUI();
+});
+}
+if (nightBox && dayBox && nightBox instanceof HTMLInputElement && dayBox instanceof HTMLInputElement) {
+nightBox.addEventListener('change', function () {
+dayBox.checked = !nightBox.checked;
+if (mapFrame) { if (nightBox.checked) mapFrame.classList.add('night-mode'); else mapFrame.classList.remove('night-mode'); }
+});
+dayBox.addEventListener('change', function () {
+nightBox.checked = !dayBox.checked;
+if (mapFrame) { if (dayBox.checked) mapFrame.classList.remove('night-mode'); else mapFrame.classList.add('night-mode'); }
+});
+}
+if (startBtn) {
+startBtn.addEventListener('click', function () {
+var nameInput = document.getElementById('projName');
+if (nameInput && nameInput instanceof HTMLInputElement) localStorage.setItem('urban_current_project_name', nameInput.value || 'Без названия');
+alert("Проект успешно настроен! Переход в симулятор.");
+scrNewProject.classList.remove('active-screen');
+});
+}
+function updateProfileUI() {
+var sn = localStorage.getItem('urban_username');
+var sm = localStorage.getItem('urban_email');
+var si = localStorage.getItem('urban_avatar');
+var container = document.getElementById('pC');
+var avatar = document.getElementById('uA');
+var link = document.getElementById('lL');
+if (sn && container && avatar) {
+if (link) link.style.display = 'none';
+var existingText = container.querySelector('.pt');
+if (existingText) existingText.remove();
+var mm = 'Почта:@gmail.com';
+if (sm && sm.includes('@')) mm = 'Почта:@' + sm.split('@')[1];
+var tb = document.createElement('div'); tb.className = 'pt';
+tb.innerHTML = '' + sn + '' + mm + '';
+container.insertBefore(tb, avatar);
+if (si) { avatar.style.backgroundImage = "url('" + si + "')"; avatar.classList.add('hi'); }
+}
+}
+function initYandexMap() {
+if (yandexMap) return;
+if (typeof ymaps !== 'undefined') {
+ymaps.ready(function () {
+yandexMap = new ymaps.Map('map', { center: [55.75, 37.62], zoom: 2, type: 'yandex#satellite', controls: ['zoomControl'] });
+yandexMap.events.add('boundschange', function () {
+var scaleInput = document.getElementById('projScale');
+if (yandexMap && scaleInput) {
+var res = Math.round(156543 / Math.pow(2, yandexMap.getZoom()));
+scaleInput.value = res + " px/px";
+}
+});
+});
+}
+}
+});
+})();
