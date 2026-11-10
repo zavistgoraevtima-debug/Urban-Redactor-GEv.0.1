@@ -115,9 +115,9 @@
                 if (avatarDataUrl) {
                     localStorage.setItem('urban_avatar', avatarDataUrl);
                 }
-
-                // Переход строго на index.html относительно текущей папки репозитория
-                window.location.href = './index.html';
+                
+                // Самая безопасная команда перехода для серверов Linux
+                window.location.href = 'index.html';
             });
         }
     });
@@ -128,7 +128,7 @@
             o.type = 'sawtooth'; o.frequency.setValueAtTime(150, ctx.currentTime);
             g.gain.setValueAtTime(0.15, ctx.currentTime); o.connect(g); g.connect(ctx.destination);
             o.start(); o.stop(ctx.currentTime + 0.25);
-        } catch (e) { }
+        } catch (e) {}
     }
 
     function triggerLinkCheck(url) {
@@ -154,3 +154,4 @@
         } catch (e) { t.innerHTML += '<div class="le">&gt; Порт: [ОШИБКА] Шлюз заблокирован.</div>'; }
     }
 })();
+
